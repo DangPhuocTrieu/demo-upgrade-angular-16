@@ -1,0 +1,31 @@
+<form class="login" [formGroup]="form" (ngSubmit)="handleSubmit(form)">
+    <h4 class="login-title">Login</h4>
+    <div class="field p-float-label login-group">
+        <input type="text" id="username" pInputText formControlName="username"> 
+        <label for="username">Username</label>
+        <div class="login-mess">
+            <ng-container *ngIf="form.get('username')?.errors && form.get('username')?.touched">
+                <p *ngIf="form.get('username')?.errors?.['required']">Username is required</p>
+            </ng-container>
+        </div>
+    </div>
+    <div class="field p-float-label login-group">
+        <input pPassword type="password" id="password" formControlName="password" [feedback]="false"> 
+        <label for="password">Password</label>
+        <div class="login-mess">
+            <ng-container *ngIf="form.get('password')?.errors && form.get('password')?.touched">
+                <p *ngIf="form.get('password')?.errors?.['required']">Password is required</p>
+            </ng-container>
+        </div>
+    </div>
+    <div class="login-submit">
+        <button pButton type="submit">Login</button>
+    </div>
+    <div class="login-regis">
+        <span>Have not account yet?</span>
+        <button pButton class="p-button-text" routerLink="/signup">Sign up</button>
+    </div>
+</form>
+
+
+<p-toast></p-toast>

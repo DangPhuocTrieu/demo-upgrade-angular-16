@@ -1,0 +1,48 @@
+.policy {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 20px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+
+    & > * {
+        width: calc(25% - 15px);
+    }
+
+    &__item {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        gap: 0 20px;
+        box-shadow: 0 0 15px 5px rgba(black, 0.15);
+        cursor: pointer;
+        transition: 0.3s linear;
+
+        &:hover {
+            transform: translateY(-15px);
+
+            .policy__content h5 {
+                color: #4267b2;
+            }
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px 0;
+
+        h5 {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        p {
+            font-size: 13px;
+            color: gray;
+            line-height: 1.4;
+        }
+    }
+}

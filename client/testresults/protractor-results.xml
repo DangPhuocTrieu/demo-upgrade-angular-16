@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites disabled="4" errors="0" failures="0" tests="6" time="0.989">
+ <testsuite name="workspace-project App" timestamp="2022-07-27T17:44:58" hostname="localhost" time="0.989" errors="0" tests="4" skipped="0" disabled="2" failures="0">
+  <testcase classname="workspace-project App" name="click button payment" time="0.663" />
+  <testcase classname="workspace-project App" name="increase quantily item" time="0.325" />
+  <testcase classname="workspace-project App" name="click button mutli delete" time="0">
+   <skipped />
+  </testcase>
+  <testcase classname="workspace-project App" name="test input search value" time="0">
+   <skipped />
+  </testcase>
+ </testsuite>
+ <testsuite name="workspace-project App" timestamp="2022-07-27T17:44:59" hostname="localhost" time="0" errors="0" tests="2" skipped="0" disabled="2" failures="0">
+  <testcase classname="workspace-project App" name="display product list" time="0">
+   <skipped />
+  </testcase>
+  <testcase classname="workspace-project App" name="click cart button" time="0">
+   <skipped />
+  </testcase>
+ </testsuite>
+</testsuites>

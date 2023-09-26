@@ -1,0 +1,228 @@
+.detail {
+    padding: 0 120px;
+    margin-bottom: 400px;
+
+    &__content {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 0 50px;
+        margin-bottom: 50px;
+    }
+    &__wrapp {
+        width: calc(55% - 25px);
+        position: relative;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #eee;
+        
+        img {
+            width: 100%;
+        }
+    }
+
+    &__discount {
+        position: absolute;
+        top: 30px;
+        left: 0;
+        background-color: orange;
+        color: white;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 10px;
+    }
+
+    &__info {
+        width: calc(45% - 25px);
+        display: flex;
+        flex-direction: column;
+        gap: 30px 0;
+        padding-top: 30px;
+    }
+
+    &__name {
+        font-size: 28px;
+        line-height: 1.4;
+        font-weight: 400;
+    }
+
+    &__desc {
+        color: gray;
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    &__prices {
+        display: flex;
+        align-items: center;
+        gap: 0 20px;
+
+        span:first-child {
+            font-size: 30px;
+            font-weight: 500;
+        }
+
+        span:last-child {
+            font-size: 18px;
+            color: gray;
+            text-decoration: line-through;
+        }
+    }
+
+    &__price {
+        font-size: 30px;
+        font-weight: 500;
+    }
+
+    &__type {
+        margin-top: 10px;
+        p {
+            font-size: 17px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        &-list {
+            display: flex;
+            align-items: center;
+            gap: 0 15px;
+
+            img {
+                width: 80px;
+                height: 80px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__size {
+        margin-bottom: 15px;
+
+        p {
+            font-size: 17px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        &-list {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+
+            button {
+                width: calc(20% - (60px / 5));
+                padding: 18px 0;
+                font-size: 18px;
+                font-weight: bold;
+                border: 1px solid gray;
+                border-radius: 6px;
+            }
+        }
+
+        &-selected {
+            background-color: black;
+            color: white;
+        }
+    }
+
+    &__buy {
+        display: flex;
+        align-items: center;
+        gap: 0 20px;
+        height: 60px;
+    }
+
+    &__quantily {
+        height: 100%;
+    }
+
+    &__submit {
+        flex: 1;
+        font-size: 18px;
+        font-weight: 500;
+        height: 100%;
+    }
+
+    &__policy {
+        &-main {
+            display: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px 0;
+        }
+
+        &-item {
+            width: 95%;
+            display: flex;
+            align-items: center;
+            gap: 0 20px;
+            margin: 0 auto;
+
+            div{
+                width: 50px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 100rem;
+
+                i {
+                    font-size: 20px;
+                }
+            }
+
+            &:not(:last-child) {
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eee;
+            }
+
+            &:first-child {
+                div {
+                    background-color: #fff4b8;
+                }
+                i {
+                    color: orange;
+                }
+            }
+            &:nth-child(2) {
+                div {
+                    background-color: #bff9d0;
+                }
+                i {
+                    color: green;
+                }
+            }
+            &:last-child {
+                div {
+                    background-color: #d45757;
+                }
+                i {
+                    color: white;
+                }
+            }
+        }
+    }
+
+    &__preserve {
+        margin-top: -10px;
+        
+        &-main {
+            display: flex;
+            flex-direction: column;
+            gap: 15px 0;
+        }
+
+        &-item {
+            h5 {
+                font-size: 15px;
+                padding-left: 20px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                color: gray;
+                line-height: 1.4;
+            }
+        }
+    }
+}

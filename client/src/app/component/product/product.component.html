@@ -1,0 +1,24 @@
+
+<p-card class="product" styleClass="p-card-shadow">
+    <div class="product__wrapp">
+        <img class="product__image" [src]="imageSelected" [alt]="product.name" (click)="handleNavigate(product._id)">
+        <span class="product__discount" *ngIf="product.discount">GIẢM {{product.discount}}%</span>
+    </div>
+
+    <div class="product__list">
+        <img [src]="product.images.image_1" [alt]="product.name" (mouseenter)="handleHoverImage($event)">
+        <img [src]="product.images.image_2" [alt]="product.name" (mouseenter)="handleHoverImage($event)">
+        <img [src]="product.images.image_3" [alt]="product.name" (mouseenter)="handleHoverImage($event)">
+    </div>
+
+    <p class="product__name" (click)="handleNavigate(product._id)">{{product.name}}</p>
+    <p class="product__prices" *ngIf="product.discount; else noDiscount">
+        <span>{{handleCalcPrice(product.price, product.discount)}}</span>
+        <span>{{handleCalcPrice(product.price)}}</span>
+    </p>
+    <ng-template #noDiscount>
+        <div class="product__price">
+            {{handleCalcPrice(product.price)}}
+        </div>
+    </ng-template>
+</p-card>

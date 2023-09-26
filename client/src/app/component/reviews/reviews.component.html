@@ -1,0 +1,47 @@
+<div class="reviews">
+    <div class="reviews__heading">
+        Đánh giá <p-badge [value]="reviewsTotalString"></p-badge>
+    </div>
+    <div class="reviews__total"><span>{{reviews.length}}</span> đánh giá</div>
+    <p class="reviews__first" *ngIf="reviews.length === 0">Hãy Là Người Đầu Tiên Nhận Xét {{product.name}}</p>
+
+    <div class="reviews__list" *ngIf="reviews.length > 0">
+        <div class="reviews__list-item" *ngFor="let review of reviews">
+            <div class="reviews__list-wrapp">
+                <span class="reviews__list-name">{{user?.username}}</span>
+                <p-rating [stars]="review.rating" [cancel]="false" iconOffClass="pi pi-star-fill" [iconOffStyle]="{fontSize: '13px'}" [readonly]="true"></p-rating>
+                <span class="reviews__list-date">{{dateNow | date}}</span>
+            </div>
+            <p class="reviews__list-comment">{{review.comment}}</p>
+        </div>
+    </div>
+
+    <form *ngIf="user; else notLogged" class="reviews__form" [formGroup]="form" (ngSubmit)="handleSubmit(form)">
+        <p>Đánh giá của bạn</p>
+        <div class="reviews__rating">
+            <p-rating [cancel]="false" formControlName="rating"></p-rating>
+            <div class="reviews__message" *ngIf="form.get('rating')?.errors && form.get('rating')?.touched">
+                <p *ngIf="form.get('rating')?.errors?.['required']">Rating is required</p>
+            </div>
+        </div>
+
+        <div class="p-float-label reviews__comment">
+            <textarea [rows]="5" cols="100%" pInputTextarea [autoResize]="true" id="comment" pInputText formControlName="comment"></textarea>
+            <label for="comment">Nhận xét của bạn*</label>
+            <div class="reviews__message" *ngIf="form.get('comment')?.errors && form.get('comment')?.touched">
+                <p *ngIf="form.get('comment')?.errors?.['required']">Comment is required</p>
+                <p *ngIf="form.get('comment')?.errors?.['minlength']">This field must be at least 15 characters</p>
+            </div>
+        </div>
+
+        <button pButton type="submit" label="Đánh giá" class="reviews__submit"></button> 
+    </form>
+
+    <ng-template #notLogged>
+       <div class="reviews__login">
+            <p-button routerLink="/login" label="Bạn cần phải đăng nhập để có thể đánh giá!"></p-button>
+       </div>
+    </ng-template>
+</div>
+
+<p-toast></p-toast>

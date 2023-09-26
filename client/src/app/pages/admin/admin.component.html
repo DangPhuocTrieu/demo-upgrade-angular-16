@@ -1,0 +1,116 @@
+<p-toast></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="my-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" [disabled]="selectedProducts.length === 0" (click)="deleteSelectedProducts()"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 p-d-inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
+    
+    <p-table [value]="products"  [rows]="5" [paginator]="true" [rowHover]="true" [(selection)]="selectedProducts"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h3 class="m-0">Manage Products</h3>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..." (input)="handleSearchChange($event)">
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th></th>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                <th pSortableColumn="discount">Discount <p-sortIcon field="discount"></p-sortIcon></th>
+                <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                </td>
+                <td>
+                    <img [src]="sanitizeImageUrl(product.images.image_1)" [alt]="product.name" width="100" height="100" class="shadow-4">
+                </td>
+                <td>{{product.name}}</td>
+                <td >{{product.description}}</td>
+                <td>{{product.discount ? product.discount : 0}}</td>
+                <td>{{formatPrice(product.price)}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="handleDeleteProduct(product._id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{products.length}} users
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- ///////////////////// -->
+<p-dialog [(visible)]="isVisible" [style]="{width: '450px'}" header="User Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content" [formGroup]="form">
+        <div *ngIf="images" class="field flex justify-content-center column-gap-3">
+            <img [src]="sanitizeImageUrl(images.image_1)" alt="Avatar" class="w-5rem h-5rem">
+            <img [src]="sanitizeImageUrl(images.image_2)" alt="Avatar" class="w-5rem h-5rem">
+            <img [src]="sanitizeImageUrl(images.image_3)" alt="Avatar" class="w-5rem h-5rem">
+        </div>
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" name="name" formControlName="name">
+            <div *ngIf="form.get('name')?.errors && form.get('name')?.touched">
+                <small class="p-error" *ngIf="form.get('name')?.errors?.['required']">Name is required</small>
+            </div>
+        </div>
+        <div class="field">
+            <label for="desc">Description</label>
+            <textarea pInputTextarea pInput id="desc" name="description" formControlName="description" rows="3" style="resize: none;"></textarea>
+            <div *ngIf="form.get('description')?.errors && form.get('description')?.touched">
+                <small class="p-error" *ngIf="form.get('description')?.errors?.['required']">Description is required</small>
+            </div>
+        </div>
+        <div class="field">
+            <label for="discount">Discount</label>
+            <p-inputNumber id="discount" name="discount" formControlName="discount"></p-inputNumber>
+            <div *ngIf="form.get('discount')?.errors && form.get('discount')?.touched">
+                <small class="p-error" *ngIf="form.get('discount')?.errors?.['required']">Discount is required</small>
+            </div>
+        </div>
+        <div class="field">
+            <label for="price">Price</label>
+            <p-inputNumber id="price" name="price" formControlName="price"></p-inputNumber>
+            <div *ngIf="form.get('price')?.errors && form.get('price')?.touched">
+                <small class="p-error" *ngIf="form.get('price')?.errors?.['required']">Price is required</small>
+            </div>
+        </div>
+        <div class="field">
+            <p-fileUpload *ngIf="!form.value._id" (onSelect)="handleSelectImage($event)" mode="basic" accept="image/*" label="Upload image" [multiple]="true" chooseLabel="Upload image" (onSelect)="handleSelectImage($event)"></p-fileUpload>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUser(form)"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

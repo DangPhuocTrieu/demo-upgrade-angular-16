@@ -1,0 +1,96 @@
+<ng-container *ngIf="product">
+    <div class="detail">
+        <div class="detail__content">
+            <div class="detail__wrapp">
+                <img [src]="imageSelected" [alt]="product.name" class="detail__image">
+                <span class="detail__discount" *ngIf="product.discount">GIẢM {{product.discount}}%</span>
+            </div>
+            <div class="detail__info">
+                <h3 class="detail__name">{{product.name}}</h3>
+                <p-rating [ngModel]="rating" [cancel]="false" [readonly]="true"></p-rating>
+                <p class="detail__desc">{{product.description}}</p>
+                <p class="detail__prices" *ngIf="product.discount; else noDiscount">
+                    <span>{{handleCalcPrice(product.price, product.discount)}}</span>
+                    <span>{{handleCalcPrice(product.price)}}</span>
+                </p>
+                <ng-template #noDiscount>
+                    <div class="detail__price">
+                        {{handleCalcPrice(product.price)}}
+                    </div>
+                </ng-template>
+                <div class="detail__type">
+                    <p>Kiểu loại</p>
+                    <div class="detail__type-list">
+                        <img [src]="product.images.image_1" [alt]="product.name" (click)="handleChangeImage($event)">
+                        <img [src]="product.images.image_2" [alt]="product.name" (click)="handleChangeImage($event)">
+                        <img [src]="product.images.image_3" [alt]="product.name" (click)="handleChangeImage($event)">
+                    </div>
+                </div>
+                <div class="detail__size">
+                    <p>Kích cỡ</p>
+                    <div class="detail__size-list">
+                        <button 
+                            *ngFor="let size of sizeList"
+                            [class.detail__size-selected]="size === sizeSelected"
+                            (click)="handleChooseSize(size)"
+                        >
+                            {{size}}
+                        </button>
+                    </div>
+                </div>
+                 <div class="detail__buy">
+                     <p-inputNumber [(ngModel)]="quantily" [min]="1" [max]="10" class="detail__quantily"></p-inputNumber>
+                    <button pButton [disabled]="!sizeSelected || !quantily" label="MUA NGAY" class="detail__submit" (click)="hanldeAddToCart()"></button>
+                 </div>
+                <p-panel header="CHÍNH SÁCH GIAO HÀNG VÀ ĐỔI TRẢ" [toggleable]="true" [collapsed]="true" class="detail__policy">
+                    <div class="detail__policy-main">
+                        <div class="detail__policy-item">
+                            <div>
+                                 <i class="pi pi-heart"></i>
+                            </div>
+                             <p>Giao hàng hoàn toàn miễn phí 100%</p>
+                         </div>
+                         <div class="detail__policy-item">
+                             <div>
+                                 <i class="pi pi-heart"></i>
+                            </div>
+                             <p>An toàn với nhận hàng và trả tiền tại nhà</p>
+                         </div>
+                         <div class="detail__policy-item">
+                             <div>
+                                 <i class="pi pi-heart"></i>
+                            </div>
+                             <p>Bảo hành đổi trả trong vòng 60 ngày</p>
+                         </div>
+                    </div>
+                </p-panel>
+                <p-panel header="HƯỚNG DẪN BẢO QUẢN" [toggleable]="true" [collapsed]="true" class="detail__preserve">
+                    <div class="detail__preserve-main">
+                        <div class="detail__preserve-item">
+                            <h5>Khử mùi bên trong giày</h5>
+                            <p>
+                                Bạn hãy đặt túi đựng viên chống ẩm vào bên trong giày để hút ẩm và rắc phấn rôm (có thể thay bằng cách đặt vào
+                                bên trong giày gói trà túi lọc chưa qua sử dụng) để khử mùi, giúp giày luôn khô thoáng.
+                            </p>
+                        </div>
+                        <div class="detail__preserve-item">
+                            <h5>Bảo quản giày khi không sử dụng</h5>
+                            <p>
+                                Khi sử dụng giày, bạn đừng vội vứt hộp đi mà hãy cất lại để dành. Khi không sử dụng, hãy nhét một ít giấy vụn 
+                                vào bên trong giày để giữ cho dáng giày luôn chuẩn, đẹp. Sau đó đặt giày vào hộp bảo quản cùng túi hút ẩm.
+                            </p>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+        </div>
+    
+        <app-reviews 
+            [product]="product"
+            (reviewsChange)="handleReviewsChange($event)"
+        >
+        </app-reviews>
+    </div>
+    
+</ng-container>
+

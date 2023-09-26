@@ -1,0 +1,74 @@
+<div class="cart">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
+            <button pButton pRipple [label]="'Delete'" icon="pi pi-trash" class="cart__deletes p-button-danger" [disabled]="productsSelected.length < 1" (click)="handleMultipleDelete()"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt class="cart__table" [value]="cartList" [rows]="5" [paginator]="true" [rowHover]="true" [loading]="!cartList" [(selection)]="productsSelected"
+     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h4 class="m-0">Manage Carts</h4>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input class="cart__search" pInputText type="text" placeholder="Search..." [(ngModel)]="searchValue" (input)="handleSearchChange()" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox class="cart__checkall"></p-tableHeaderCheckbox>
+                </th>
+                <th>Image</th>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+                <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
+                <th pSortableColumn="quantily">Quantily <p-sortIcon field="quantily"></p-sortIcon></th>
+                <th pSortableColumn="size">Size <p-sortIcon field="size"></p-sortIcon></th>
+                <th pSortableColumn="total">Total <p-sortIcon field="Total"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr> 
+                <td>
+                    <p-tableCheckbox [value]="item"></p-tableCheckbox>
+                </td>
+                <td><img [src]="item.images.image_1" [alt]="item.name" width="100" class="shadow-4 cursor-pointer" routerLink="/product/{{item._id}}" /></td>
+                <td>{{ item.name }}</td>
+                <td>{{ formatPrice(item.originPrice) }}</td>
+                <td><p-rating [ngModel]="item.rating" [readonly]="true" [cancel]="false"></p-rating></td>
+                <td class="cart__quantily">{{ item.quantily }}</td>
+                <td>{{ item.size }}</td>
+                <td>{{ formatPrice(item.originPrice * item.quantily) }}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-caret-up" class="cart__increase p-button-rounded p-button-success mr-2" (click)="handleChangeQuantily('increase', item._id, item.size, item.quantily + 1)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2" (click)="handleDelete(item._id, item.size)"></button>
+                    <button pButton pRipple icon="pi pi-caret-down" class="cart__decrease p-button-rounded p-button-success" (click)="handleChangeQuantily('decrease', item._id, item.size, item.quantily - 1)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                <p>In total there are {{cartList ? cartList.length : 0 }} products.</p>
+                <div class="flex align-items-center column-gap-7">
+                    <span>Tổng tiền: <b>{{handleTotalPrice()}}</b></span>
+                    <button class="cart__payment" *ngIf="cartList.length > 0" pButton label="Thanh toán" (click)="handlePayment()"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No products found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog class="cart__dialog" [style]="{width: '450px'}"></p-confirmDialog>
+
+

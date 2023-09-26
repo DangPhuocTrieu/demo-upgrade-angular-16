@@ -1,0 +1,12 @@
+<p-carousel styleClass="container" class="slider" [value]="products" [numVisible]="1" [numScroll]="1" [circular]="true" >
+    <ng-template let-product pTemplate="item">
+        <div class="slider__item">
+           <div class="slider__content">
+               <h5>{{product.name}}</h5>
+               <h2>{{product.title}}</h2>
+               <p>{{product.description}}</p>
+           </div>
+           <img class="slider__image" [src]="product.image" [alt]="product.name">
+        </div>
+    </ng-template>
+</p-carousel>

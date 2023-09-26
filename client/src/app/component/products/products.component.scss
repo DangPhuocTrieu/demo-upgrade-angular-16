@@ -1,0 +1,19 @@
+.products {
+    margin-bottom: 50px;
+    
+    &__heading {
+        text-align: center;
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    &__list {
+        display: flex;
+        gap: 40px 20px;
+        flex-wrap: wrap;
+
+        & > * {
+            width: calc(25% - 15px)
+        }
+    }
+}

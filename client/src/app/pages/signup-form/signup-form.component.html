@@ -1,0 +1,40 @@
+<form class="signup" [formGroup]="form" (ngSubmit)="handleSubmit(form)">
+    <h4 class="signup-title">sign up</h4>
+    <div class="field p-float-label signup-group">
+        <input type="text" id="username" pInputText formControlName="username"> 
+        <label for="username">Username</label>
+        <div class="signup-mess">
+            <ng-container *ngIf="form.get('username')?.errors && form.get('username')?.touched">
+                <p *ngIf="form.get('username')?.errors?.['required']">Username is required</p>
+            </ng-container>
+        </div>
+    </div>
+    <div class="field p-float-label signup-group">
+        <input pPassword type="password" id="password" formControlName="password" [feedback]="false"> 
+        <label for="password">Password</label>
+        <div class="signup-mess">
+            <ng-container *ngIf="form.get('password')?.errors && form.get('password')?.touched">
+                <p *ngIf="form.get('password')?.errors?.['required']">Password is required</p>
+            </ng-container>
+        </div>
+    </div>
+    <div class="field p-float-label signup-group">
+        <input pPassword type="password" id="confirm-pwd" formControlName="confirmpassword" [feedback]="false"> 
+        <label for="confirm-pwd">Confirm password</label>
+        <div class="signup-mess">
+            <ng-container *ngIf="form.get('confirmpassword')?.errors && form.get('confirmpassword')?.touched">
+                <p *ngIf="form.get('confirmpassword')?.errors?.['required']">Confirm password is required</p>
+                <p *ngIf="form.errors?.['notSame']"> Confirmation password does not match</p>
+            </ng-container>
+        </div>
+    </div>
+    <div class="signup-submit">
+        <button pButton type="submit">Sign up</button>
+    </div>
+    <div class="signup-login">
+        <span>Do you have an account?</span>
+        <button pButton class="p-button-text" routerLink="/login">Login</button>
+    </div>
+</form>
+
+<p-toast></p-toast>
